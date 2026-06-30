@@ -65,3 +65,9 @@ This chronological log summarizes significant project decisions. ADRs remain the
 - Made repository documentation the permanent project knowledge base.
 - Established mandatory AI reading order, status tracking, engineering guidance, operations documentation, and the decision log.
 - Froze the existing foundation architecture pending an approved ADR and implementation specification.
+
+## Sprint D2 — HostGuard Manifesto
+
+- Established `HOSTGUARD_MANIFESTO.md` as the permanent statement of project identity and engineering philosophy.
+- Made the Manifesto mandatory reading for human and AI-assisted development.
+- Confirmed that production safety, auditability, recoverability, and predictable failure take precedence over automation and delivery speed.

@@ -263,6 +263,10 @@ Project documentation is part of the HostGuard architecture. Contributors and AI
 - [Backup Strategy](docs/operations/BACKUP_STRATEGY.md)
 - [Testing Strategy](docs/operations/TESTING.md)
 
+## Project Manifesto
+
+[HOSTGUARD_MANIFESTO.md](HOSTGUARD_MANIFESTO.md) defines the permanent identity, mission, engineering philosophy, design constraints, and production priorities of HostGuard. It is the governing reference when a technical decision is uncertain.
+
 ## Contributing
 
 Contributions should remain small, modular, and conservative. Before submitting a change:
@@ -278,4 +282,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint D1. Its architecture is documented and frozen at the foundation established through Sprint 9. Backup execution, snapshots, exports, manifests, hashing, retention, and concrete backup workflows remain unimplemented.
+HostGuard is at version `0.1.0-dev` and Sprint D2. Its architecture is documented and frozen at the foundation established through Sprint 9, and its permanent identity is defined by the Project Manifesto. Backup execution, snapshots, exports, manifests, hashing, retention, and concrete backup workflows remain unimplemented.

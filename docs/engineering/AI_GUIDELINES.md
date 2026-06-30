@@ -7,13 +7,14 @@ AI tools are collaborators, not sources of project memory. Repository documentat
 Before modifying any code:
 
 1. Read `AI_CONTEXT.md`.
-2. Read `docs/CURRENT_STATUS.md`.
-3. Read `docs/ARCHITECTURE.md`.
-4. Read `PROJECT_PRINCIPLES.md`.
-5. Read `docs/ROADMAP.md`.
-6. Read `docs/engineering/CODING_STANDARDS.md`.
-7. Read `docs/decisions/DECISION_LOG.md`.
-8. Read every ADR in `docs/adr/`.
+2. Read `HOSTGUARD_MANIFESTO.md`.
+3. Read `docs/CURRENT_STATUS.md`.
+4. Read `docs/ARCHITECTURE.md`.
+5. Read `PROJECT_PRINCIPLES.md`.
+6. Read `docs/ROADMAP.md`.
+7. Read `docs/engineering/CODING_STANDARDS.md`.
+8. Read `docs/decisions/DECISION_LOG.md`.
+9. Read every ADR in `docs/adr/`.
 
 Then inspect the current Git status and the files in scope. Never assume that earlier conversation context is more current than the repository.
 
@@ -25,6 +26,7 @@ Then inspect the current Git status and the files in scope. Never assume that ea
 - Never expand a Sprint beyond its written acceptance criteria.
 - Never bypass Workflow, Job, Inventory, Platform, Policy, or CommandRunner boundaries.
 - Never infer authorization for destructive behavior.
+- Never remove or contradict the Project Manifesto without an explicitly approved documentation change.
 
 ## Documentation Discipline
 

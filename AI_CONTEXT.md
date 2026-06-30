@@ -7,9 +7,9 @@ HostGuard is not a backup script. Its defining philosophy is that virtual machin
 # Current Project Status
 
 - **Version:** `0.1.0-dev`
-- **Current milestone:** Engineering Documentation Foundation (Sprint D1)
+- **Current milestone:** Project Identity Documentation (Sprint D2)
 - **Architecture:** Frozen at the foundation established through Sprint 9
-- **Last completed sprint:** Sprint D1 — Engineering Documentation & AI Knowledge Base
+- **Last completed sprint:** Sprint D2 — HostGuard Manifesto
 - **Next sprint:** Not yet defined; implementation requires an approved specification
 
 The project contains architectural foundations and limited read-only discovery. Backup, snapshot, export, restore, monitoring, and concrete workflow or policy implementations do not exist.
@@ -49,13 +49,14 @@ The following rules are mandatory:
 Before changing the project, read these sources in order:
 
 1. `AI_CONTEXT.md`
-2. `docs/CURRENT_STATUS.md`
-3. `docs/ARCHITECTURE.md`
-4. `PROJECT_PRINCIPLES.md`
-5. `docs/ROADMAP.md`
-6. `docs/engineering/CODING_STANDARDS.md`
-7. `docs/decisions/DECISION_LOG.md`
-8. Every ADR in `docs/adr/`
+2. `HOSTGUARD_MANIFESTO.md`
+3. `docs/CURRENT_STATUS.md`
+4. `docs/ARCHITECTURE.md`
+5. `PROJECT_PRINCIPLES.md`
+6. `docs/ROADMAP.md`
+7. `docs/engineering/CODING_STANDARDS.md`
+8. `docs/decisions/DECISION_LOG.md`
+9. Every ADR in `docs/adr/`
 
 # Development Rules
 
@@ -66,3 +67,4 @@ Before changing the project, read these sources in order:
 - Update `docs/CURRENT_STATUS.md` after every Sprint.
 - Keep implementation inside the authorized Sprint scope.
 - Treat documentation as an architectural artifact, not optional commentary.
+- Use `HOSTGUARD_MANIFESTO.md` as the prevailing identity and engineering philosophy when technical choices are uncertain.

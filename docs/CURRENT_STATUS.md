@@ -3,8 +3,9 @@
 ## Release Identity
 
 - **Version:** `0.1.0-dev`
-- **Milestone:** Engineering Documentation Foundation
-- **Last completed Sprint:** Sprint D1
+- **Milestone:** Project Identity Documentation
+- **Last completed Sprint:** Sprint D2 — HostGuard Manifesto
+- **Previous Sprint:** Sprint D1 — Engineering Documentation Foundation
 - **Previous engineering Sprint:** Sprint 9 — Backup Planner Foundation
 - **Next Sprint:** Not yet defined; an approved specification is required
 
@@ -21,6 +22,7 @@
 - Abstract Policy, PolicyResult, and PolicyManager.
 - Declarative BackupPlan generation and storage-only validation.
 - Engineering documentation and required AI reading path.
+- Project Manifesto governing identity and engineering philosophy.
 
 ## Pending Components
 
@@ -34,7 +36,7 @@
 
 ## Architecture State
 
-The foundation architecture established through Sprint 9 is frozen. Sprint D1 changes documentation only. Architectural changes require an ADR and an approved implementation specification.
+The foundation architecture established through Sprint 9 is frozen. Sprints D1 and D2 change documentation only. Architectural changes require an ADR and an approved implementation specification. `HOSTGUARD_MANIFESTO.md` is the prevailing reference when a technical decision is uncertain.
 
 The implemented system is not production-ready for backup or restore. It can inspect configured storage metadata, create simulated plans, and make one permitted read-only XE host query.
 
