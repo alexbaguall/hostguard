@@ -4,10 +4,12 @@ import argparse
 from collections.abc import Sequence
 
 from modules.inventory import Inventory
+from modules.planner import BackupPlanner
 from modules.storage import (
     NoStorageAvailable,
     StorageError,
     StorageManager,
+    StorageTarget,
 )
 
 from .output import OutputManager
@@ -45,6 +47,15 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "storage",
         help="Display configured storage targets.",
+    )
+    plan_parser = subparsers.add_parser(
+        "plan",
+        help="Generate a simulated backup plan.",
+    )
+    plan_parser.add_argument(
+        "vm_name",
+        nargs="?",
+        help="Name of the virtual machine to plan.",
     )
     for command in ("doctor", "backup", "status", "verify", "restore"):
         subparsers.add_parser(
@@ -88,6 +99,17 @@ def main(arguments: Sequence[str] | None = None) -> int:
             output.write(
                 "HostGuard Storage\n\nNo storage targets available."
             )
+        return 0
+
+    if namespace.command == "plan":
+        if namespace.vm_name is None:
+            output.write("No VM specified.")
+            return 0
+        BackupPlanner().plan_backup(
+            namespace.vm_name,
+            _simulated_storage_target(),
+        )
+        output.write("Planner criado.\n\nBackup Plan gerado.")
         return 0
 
     if namespace.command is None:
@@ -156,3 +178,20 @@ def _format_bytes(value: int) -> str:
             return f"{amount:.1f} {unit}"
         amount /= 1024
     return f"{amount:.1f} TB"
+
+
+def _simulated_storage_target() -> StorageTarget:
+    """Return an in-memory storage target for CLI planning."""
+    return StorageTarget(
+        id="simulated",
+        path="/simulated",
+        mounted=True,
+        exists=True,
+        writable=True,
+        filesystem="Unknown",
+        total_bytes=2 * 1024**4,
+        free_bytes=1024**4,
+        used_bytes=1024**4,
+        priority=1,
+        description="Simulated planning target",
+    )

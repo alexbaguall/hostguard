@@ -102,6 +102,18 @@ Each configured target is represented by `StorageTarget`, including path state, 
 
 `StorageSelector` considers only targets that exist, are mounted, and report write access. When multiple targets qualify, the target with the lowest numeric priority is selected. No Policy is consulted and no minimum-space rule is applied in Sprint 8.
 
+### Backup Planner
+
+`modules/planner/` generates a declarative `BackupPlan` from a VM name and a storage target. Planning is read-only: it does not contact XE, create snapshots, export virtual machines, write manifests, or modify storage.
+
+#### Backup Plan
+
+A `BackupPlan` records the future job identifier, simulated VM identity, selected storage target, space values, descriptive export paths, retention placeholder, execution eligibility, and validation messages. These fields describe intent only and do not trigger operations.
+
+#### Planning Phase
+
+`BackupPlanValidator` currently checks only that storage exists, is mounted, is writable, and has more than zero available bytes. VM validation, size estimation, retention, snapshots, and export behavior remain unimplemented. The CLI uses simulated VM and storage data.
+
 ### Execution Context
 
 `ExecutionContext` is an immutable data structure containing the application version, hostname, environment, working directory, current user, start time, and job ID for one execution. It stores context without performing discovery or host changes.
@@ -182,6 +194,13 @@ hostguard/
 │   │   ├── selector.py
 │   │   ├── result.py
 │   │   └── exceptions.py
+│   ├── planner/
+│   │   ├── __init__.py
+│   │   ├── planner.py
+│   │   ├── backup_plan.py
+│   │   ├── validator.py
+│   │   ├── result.py
+│   │   └── exceptions.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
@@ -219,6 +238,7 @@ hostguard/
 - **Sprint 6:** Establish abstract Workflow, Stage, and Task orchestration.
 - **Sprint 7:** Establish the side-effect-free Policy decision layer.
 - **Sprint 8:** Add read-only storage target discovery and selection.
+- **Sprint 9:** Add declarative, read-only backup planning.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -238,4 +258,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 8. Its Storage Manager discovers configured paths and selects an eligible target without changing the filesystem. Backup, snapshot, export, retention, concrete policies, and concrete workflows remain unimplemented.
+HostGuard is at version `0.1.0-dev` and Sprint 9. Its Backup Planner creates declarative plans from simulated VM data and storage metadata. Backup execution, snapshots, exports, manifests, hashing, retention, and concrete backup workflows remain unimplemented.

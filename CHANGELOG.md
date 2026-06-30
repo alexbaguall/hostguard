@@ -32,6 +32,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Optional Workflow policy registry integration and `policies` CLI command.
 - Read-only storage target discovery, selection, and typed results.
 - Multi-target storage configuration and `storage` CLI command.
+- Declarative Backup Planner, plan validation, and typed planning results.
+- Simulated `plan` CLI command without backup execution.
 
 ### Changed
 
