@@ -90,6 +90,18 @@ Business rules belong in Policy implementations rather than Workflows. Workflows
 
 Every future policy decision is represented by a typed `PolicyResult` containing an `allowed` flag, a human-readable reason, and optional metadata. `PolicyManager` provides only in-memory registration and lookup.
 
+### Storage Manager
+
+`modules/storage/` provides read-only discovery and selection for configured backup destinations. It never creates directories, writes files, moves data, or performs backups. Discovery uses only Python standard-library filesystem inspection.
+
+#### Storage Targets
+
+Each configured target is represented by `StorageTarget`, including path state, mount and write-access flags, disk usage, priority, and descriptive metadata. The `[storage]` configuration accepts a comma-separated list of any number of target identifiers.
+
+#### Storage Selection
+
+`StorageSelector` considers only targets that exist, are mounted, and report write access. When multiple targets qualify, the target with the lowest numeric priority is selected. No Policy is consulted and no minimum-space rule is applied in Sprint 8.
+
 ### Execution Context
 
 `ExecutionContext` is an immutable data structure containing the application version, hostname, environment, working directory, current user, start time, and job ID for one execution. It stores context without performing discovery or host changes.
@@ -162,10 +174,17 @@ hostguard/
 │   │   ├── manager.py
 │   │   ├── exceptions.py
 │   │   └── result.py
+│   ├── storage/
+│   │   ├── __init__.py
+│   │   ├── manager.py
+│   │   ├── target.py
+│   │   ├── collector.py
+│   │   ├── selector.py
+│   │   ├── result.py
+│   │   └── exceptions.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
-│   ├── storage/
 │   └── monitor/
 ├── schemas/
 │   └── README.md
@@ -199,6 +218,7 @@ hostguard/
 - **Sprint 5:** Establish the synchronous, in-memory Job Engine.
 - **Sprint 6:** Establish abstract Workflow, Stage, and Task orchestration.
 - **Sprint 7:** Establish the side-effect-free Policy decision layer.
+- **Sprint 8:** Add read-only storage target discovery and selection.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -218,4 +238,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 7. Its Policy Engine provides abstract, side-effect-free decision contracts for future Workflow business rules. No concrete policy or workflow, persistence, queue, concurrency, backup, restore, monitoring, storage, or doctor functionality is implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 8. Its Storage Manager discovers configured paths and selects an eligible target without changing the filesystem. Backup, snapshot, export, retention, concrete policies, and concrete workflows remain unimplemented.

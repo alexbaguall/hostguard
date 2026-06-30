@@ -4,6 +4,11 @@ import argparse
 from collections.abc import Sequence
 
 from modules.inventory import Inventory
+from modules.storage import (
+    NoStorageAvailable,
+    StorageError,
+    StorageManager,
+)
 
 from .output import OutputManager
 from .version import Version
@@ -36,6 +41,10 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser(
         "policies",
         help="Display registered HostGuard policies.",
+    )
+    subparsers.add_parser(
+        "storage",
+        help="Display configured storage targets.",
     )
     for command in ("doctor", "backup", "status", "verify", "restore"):
         subparsers.add_parser(
@@ -72,6 +81,15 @@ def main(arguments: Sequence[str] | None = None) -> int:
         output.write("Registered Policies\n\nNone")
         return 0
 
+    if namespace.command == "storage":
+        try:
+            output.write(format_storage(StorageManager()))
+        except StorageError:
+            output.write(
+                "HostGuard Storage\n\nNo storage targets available."
+            )
+        return 0
+
     if namespace.command is None:
         parser.print_help()
         return 0
@@ -96,3 +114,45 @@ def format_inventory(inventory: Inventory) -> str:
     if host.uuid == "Unavailable":
         sections.append("Platform unavailable.")
     return "\n\n".join(sections)
+
+
+def format_storage(manager: StorageManager) -> str:
+    """Format discovered storage targets and the selected destination."""
+    targets = manager.list_targets()
+    try:
+        selection = manager.select_target()
+    except NoStorageAvailable:
+        return "HostGuard Storage\n\nNo storage targets available."
+
+    lines = [
+        f"{'ID':<16}{'Mounted':<10}{'Writable':<11}Free",
+    ]
+    lines.extend(
+        f"{target.id:<16}"
+        f"{_yes_no(target.mounted):<10}"
+        f"{_yes_no(target.writable):<11}"
+        f"{_format_bytes(target.free_bytes)}"
+        for target in targets
+    )
+    return "\n\n".join(
+        (
+            "HostGuard Storage",
+            "\n".join(lines),
+            f"Selected:\n\n{selection.selected_target.id}",
+        )
+    )
+
+
+def _yes_no(value: bool) -> str:
+    """Format a boolean for the storage table."""
+    return "Yes" if value else "No"
+
+
+def _format_bytes(value: int) -> str:
+    """Format a byte count with a compact binary unit."""
+    amount = float(value)
+    for unit in ("B", "KB", "MB", "GB"):
+        if amount < 1024:
+            return f"{amount:.1f} {unit}"
+        amount /= 1024
+    return f"{amount:.1f} TB"

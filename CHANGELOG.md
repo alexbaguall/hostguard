@@ -30,6 +30,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Workflow execution support in the Job Engine and `workflows` CLI command.
 - Abstract Policy Engine, typed decision results, and policy registry.
 - Optional Workflow policy registry integration and `policies` CLI command.
+- Read-only storage target discovery, selection, and typed results.
+- Multi-target storage configuration and `storage` CLI command.
 
 ### Changed
 
