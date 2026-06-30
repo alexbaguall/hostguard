@@ -36,7 +36,13 @@ The abstract `Platform` interface defines host, virtual machine, storage, networ
 
 #### Command Runner
 
-`CommandRunner` reserves a single boundary for future system command execution. Its `run()` method currently raises `NotImplementedError` and does not invoke the operating system.
+`CommandRunner` is the single boundary for system command execution. It uses bounded execution, captures output without invoking a shell, and returns a typed result containing stdout, stderr, exit code, and execution time. Execution failures are converted into HostGuard platform exceptions.
+
+#### First Communication with XCP-ng
+
+Sprint 4 permits exactly one read-only host query: `xe host-list --minimal`. `XEPlatform.get_host()` uses this query only to discover the host UUID. No other XE command is implemented or permitted.
+
+If XE is absent, times out, returns an error, or provides no UUID, Inventory reports the platform and Host UUID as unavailable while the application continues normally. Virtual machines, storage repositories, and networks remain simulated and empty.
 
 ### Inventory Engine
 
@@ -128,6 +134,7 @@ hostguard/
 - **Sprint 1.1:** Consolidate platform, context, event, output, schema, and architectural decision boundaries.
 - **Sprint 2:** Establish a read-only Inventory Engine with simulated data.
 - **Sprint 3:** Define virtualization platform abstractions without host communication.
+- **Sprint 4:** Add the first bounded, read-only XCP-ng host query.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -147,4 +154,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 3. Its Platform Layer defines interfaces only, and Inventory continues to expose simulated data. No command execution, host discovery, backup, restore, monitoring, storage, doctor, or platform functionality is implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 4. It can execute only the read-only `xe host-list --minimal` query to discover a host UUID. VM, storage, network, pool, backup, restore, monitoring, and doctor functionality remain unimplemented.

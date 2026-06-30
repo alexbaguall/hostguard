@@ -22,9 +22,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - `inventory` CLI command for displaying simulated inventory information.
 - Abstract Platform interface and unimplemented XE adapter.
 - Platform capabilities, command runner boundary, and exceptions.
+- Bounded command execution with typed captured results and audit logging.
+- Read-only XCP-ng host UUID discovery.
 
 ### Changed
 
 - Routed direct CLI output through `OutputManager`.
 - Consolidated the README architecture documentation.
 - Injected a Platform into `InventoryCollector` while preserving mock data.
+- Added host UUID and graceful platform-unavailable reporting to Inventory.

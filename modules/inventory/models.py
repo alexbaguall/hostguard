@@ -10,6 +10,7 @@ class HostInfo:
     hostname: str
     platform: str
     version: str
+    uuid: str = "Unavailable"
 
 
 @dataclass(frozen=True)

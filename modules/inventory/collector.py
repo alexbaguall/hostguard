@@ -1,24 +1,37 @@
-"""Mock data collector for the HostGuard inventory."""
+"""Conservative data collector for the HostGuard inventory."""
 
-from modules.platform import Platform
+from modules.platform import Platform, PlatformError
 
 from .models import HostInfo, NetworkInfo, StorageRepositoryInfo, VMInfo
 
 
 class InventoryCollector:
-    """Return static inventory data without accessing the host."""
+    """Collect host identity while retaining simulated resource data."""
 
     def __init__(self, platform: Platform) -> None:
-        """Initialize the collector with an unused platform boundary."""
+        """Initialize the collector with a platform boundary."""
         self.platform = platform
 
     def collect_host(self) -> HostInfo:
-        """Return the simulated host information."""
-        return HostInfo(
-            hostname="localhost",
-            platform="Unknown",
-            version="Unknown",
-        )
+        """Return host information or a safe unavailable result."""
+        try:
+            host = self.platform.get_host()
+        except (PlatformError, NotImplementedError):
+            return HostInfo(
+                hostname="localhost",
+                platform="Unknown",
+                version="Unknown",
+                uuid="Unavailable",
+            )
+
+        if not isinstance(host, HostInfo):
+            return HostInfo(
+                hostname="localhost",
+                platform="Unknown",
+                version="Unknown",
+                uuid="Unavailable",
+            )
+        return host
 
     def collect_vms(self) -> list[VMInfo]:
         """Return the simulated virtual machine inventory."""

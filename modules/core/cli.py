@@ -59,14 +59,16 @@ def main(arguments: Sequence[str] | None = None) -> int:
 def format_inventory(inventory: Inventory) -> str:
     """Format the current inventory for plain-text CLI output."""
     host = inventory.get_host()
-    return "\n\n".join(
-        (
-            "HostGuard Inventory",
-            f"Host:\n{host.hostname}",
-            f"Platform:\n{host.platform}",
-            f"Version:\n{host.version}",
-            f"VMs:\n{len(inventory.get_vms())}",
-            f"Storages:\n{len(inventory.get_storage())}",
-            f"Networks:\n{len(inventory.get_networks())}",
-        )
-    )
+    sections = [
+        "HostGuard Inventory",
+        f"Host:\n{host.hostname}",
+        f"Host UUID:\n{host.uuid}",
+        f"Platform:\n{host.platform}",
+        f"Version:\n{host.version}",
+        f"VMs:\n{len(inventory.get_vms())}",
+        f"Storages:\n{len(inventory.get_storage())}",
+        f"Networks:\n{len(inventory.get_networks())}",
+    ]
+    if host.uuid == "Unavailable":
+        sections.append("Platform unavailable.")
+    return "\n\n".join(sections)
