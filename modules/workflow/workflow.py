@@ -3,6 +3,7 @@
 from abc import ABC, abstractmethod
 
 from modules.jobs import Job
+from modules.policy import PolicyManager
 
 from .stage import Stage
 
@@ -14,6 +15,7 @@ class Workflow(ABC):
     description: str
     stages: list[Stage]
     job: Job | None
+    policy_manager: PolicyManager | None
 
     def __init__(
         self,
@@ -21,12 +23,14 @@ class Workflow(ABC):
         description: str,
         stages: list[Stage] | None = None,
         job: Job | None = None,
+        policy_manager: PolicyManager | None = None,
     ) -> None:
-        """Initialize workflow identity, stages, and optional job."""
+        """Initialize workflow structure and optional integrations."""
         self.name = name
         self.description = description
         self.stages = list(stages or [])
         self.job = job
+        self.policy_manager = policy_manager
 
     def add_stage(self, stage: Stage) -> None:
         """Append a stage to this workflow."""

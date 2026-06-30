@@ -78,6 +78,18 @@ The Job Engine `EventBus` defines `publish()`, `subscribe()`, and `unsubscribe()
 
 `Task` is the abstract unit of execution. Concrete tasks must provide `execute()`, but no task implementation is included in Sprint 6.
 
+### Policy Engine
+
+`modules/policy/` defines the decision boundary for future HostGuard business rules. Policies validate their own definitions and return typed decisions; they cannot execute tasks, commands, or administrative actions. No concrete policy is included in Sprint 7.
+
+#### Business Rules
+
+Business rules belong in Policy implementations rather than Workflows. Workflows are prepared to receive an optional `PolicyManager`, but they do not consult or evaluate policies during this sprint.
+
+#### Decision Layer
+
+Every future policy decision is represented by a typed `PolicyResult` containing an `allowed` flag, a human-readable reason, and optional metadata. `PolicyManager` provides only in-memory registration and lookup.
+
 ### Execution Context
 
 `ExecutionContext` is an immutable data structure containing the application version, hostname, environment, working directory, current user, start time, and job ID for one execution. It stores context without performing discovery or host changes.
@@ -144,6 +156,12 @@ hostguard/
 │   │   ├── task.py
 │   │   ├── manager.py
 │   │   └── exceptions.py
+│   ├── policy/
+│   │   ├── __init__.py
+│   │   ├── policy.py
+│   │   ├── manager.py
+│   │   ├── exceptions.py
+│   │   └── result.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
@@ -180,6 +198,7 @@ hostguard/
 - **Sprint 4:** Add the first bounded, read-only XCP-ng host query.
 - **Sprint 5:** Establish the synchronous, in-memory Job Engine.
 - **Sprint 6:** Establish abstract Workflow, Stage, and Task orchestration.
+- **Sprint 7:** Establish the side-effect-free Policy decision layer.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -199,4 +218,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 6. Its Workflow Engine organizes abstract stages and tasks within the in-memory Job lifecycle. No concrete workflow, persistence, queue, concurrency, backup, restore, monitoring, storage, or doctor functionality is implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 7. Its Policy Engine provides abstract, side-effect-free decision contracts for future Workflow business rules. No concrete policy or workflow, persistence, queue, concurrency, backup, restore, monitoring, storage, or doctor functionality is implemented.

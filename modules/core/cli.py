@@ -33,6 +33,10 @@ def build_parser() -> argparse.ArgumentParser:
         "workflows",
         help="Display available HostGuard workflows.",
     )
+    subparsers.add_parser(
+        "policies",
+        help="Display registered HostGuard policies.",
+    )
     for command in ("doctor", "backup", "status", "verify", "restore"):
         subparsers.add_parser(
             command,
@@ -62,6 +66,10 @@ def main(arguments: Sequence[str] | None = None) -> int:
 
     if namespace.command == "workflows":
         output.write("Available Workflows\n\nNone")
+        return 0
+
+    if namespace.command == "policies":
+        output.write("Registered Policies\n\nNone")
         return 0
 
     if namespace.command is None:
