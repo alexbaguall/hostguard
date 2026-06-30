@@ -14,20 +14,33 @@ HostGuard uses only tools already available on the system. It is not a backup sc
 - Preserve host and virtual machine integrity.
 - Avoid external runtime dependencies.
 
-## Architecture
+## Architecture Overview
 
-HostGuard follows a modular architecture. The command-line entry point lives in `bin/`, shared infrastructure lives in `modules/core/`, and future capabilities remain isolated in their own module directories. Mutable application data is separated into `var/`, while operational records live in `logs/`.
+HostGuard separates platform-independent capabilities, shared core infrastructure, and platform integrations. The command-line entry point lives in `bin/`, mutable application data lives in `var/`, and operational records live in `logs/`. This separation prevents higher-level modules from depending directly on a specific virtualization platform.
 
-The initial module boundaries are:
+### Core
 
-- **VMBackup** for future virtual machine backup orchestration.
-- **Backup Agent** for future backup agent operations.
-- **Doctor** for future diagnostic checks.
-- **Storage** for future storage operations.
-- **XE** for future integration with existing XE tooling.
-- **Monitor** for future monitoring capabilities.
+`modules/core/` contains shared, platform-independent infrastructure: CLI parsing, configuration access, logging, runtime metadata, job identity, lock state, execution context, events, output, and version access. The Core does not perform host operations.
 
-These directories are placeholders only. No operational functionality is included in the current milestone.
+### Platform Layer
+
+`modules/platform/` is the boundary for future hypervisor integrations. The initial `platform/xe/` package is structural only. Future integrations may include Proxmox, VMware, or libvirt without requiring VMBackup to know which platform is active.
+
+### Execution Context
+
+`ExecutionContext` is an immutable data structure containing the application version, hostname, environment, working directory, current user, start time, and job ID for one execution. It stores context without performing discovery or host changes.
+
+### Event Driven Design
+
+Future communication between modules will use events through the `Event` and `EventBus` interfaces. This boundary is intentionally unimplemented in Sprint 1.1 and establishes a low-coupling direction for later development.
+
+### Project Principles
+
+[PROJECT_PRINCIPLES.md](PROJECT_PRINCIPLES.md) defines HostGuard's binding safety and operational principles. Virtual machine integrity, auditability, reversibility, conservative failure, and predictable behavior take precedence over automation.
+
+### Architecture Decision Records
+
+Architectural decisions are documented as ADRs in [`docs/adr/`](docs/adr/). These records preserve the context, decision, and consequences of significant technical choices.
 
 ## Directory Structure
 
@@ -46,13 +59,21 @@ hostguard/
 │   │   ├── runtime.py
 │   │   ├── job.py
 │   │   ├── lock.py
+│   │   ├── context.py
+│   │   ├── events.py
+│   │   ├── output.py
 │   │   └── version.py
+│   ├── platform/
+│   │   ├── __init__.py
+│   │   └── xe/
+│   │       └── __init__.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
 │   ├── storage/
-│   ├── xe/
 │   └── monitor/
+├── schemas/
+│   └── README.md
 ├── var/
 │   ├── cache/
 │   ├── jobs/
@@ -60,7 +81,11 @@ hostguard/
 │   └── run/
 ├── logs/
 ├── docs/
+│   └── adr/
+│       ├── README.md
+│       └── 0001-python-core.md
 ├── tests/
+├── PROJECT_PRINCIPLES.md
 ├── VERSION
 ├── README.md
 ├── CHANGELOG.md
@@ -72,6 +97,7 @@ hostguard/
 
 - **Milestone 0:** Establish the project structure and documentation.
 - **Sprint 1:** Provide the dependency-free core infrastructure and CLI parser.
+- **Sprint 1.1:** Consolidate platform, context, event, output, schema, and architectural decision boundaries.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -91,4 +117,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 1. The repository contains its core CLI, configuration reader, logger, runtime information collector, in-memory job manager, and lock state abstraction. No host administration module is implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 1.1. Its architecture is consolidated for future platform and module development. No backup, restore, monitoring, storage, doctor, or platform functionality is implemented.

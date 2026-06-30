@@ -3,4 +3,6 @@ var/
 tmp/
 *.log
 *.swp
+__pycache__/
+*.py[cod]
 .DS_Store

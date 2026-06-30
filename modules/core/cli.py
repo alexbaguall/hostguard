@@ -3,6 +3,7 @@
 import argparse
 from collections.abc import Sequence
 
+from .output import OutputManager
 from .version import Version
 
 
@@ -31,14 +32,15 @@ def main(arguments: Sequence[str] | None = None) -> int:
     """Run the HostGuard command-line interface."""
     parser = build_parser()
     namespace = parser.parse_args(arguments)
+    output = OutputManager()
 
     if namespace.command == "version":
-        print(Version().value)
+        output.write(Version().value)
         return 0
 
     if namespace.command is None:
         parser.print_help()
         return 0
 
-    print(NOT_IMPLEMENTED_MESSAGE)
+    output.write(NOT_IMPLEMENTED_MESSAGE)
     return 0
