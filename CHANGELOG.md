@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Platform capabilities, command runner boundary, and exceptions.
 - Bounded command execution with typed captured results and audit logging.
 - Read-only XCP-ng host UUID discovery.
+- In-memory Job Engine, lifecycle manager, status enum, and job events.
+- Structural Job Engine event bus and `jobs` CLI command.
 
 ### Changed
 

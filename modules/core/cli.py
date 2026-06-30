@@ -25,6 +25,10 @@ def build_parser() -> argparse.ArgumentParser:
         "inventory",
         help="Display the read-only host inventory.",
     )
+    subparsers.add_parser(
+        "jobs",
+        help="Display active HostGuard jobs.",
+    )
     for command in ("doctor", "backup", "status", "verify", "restore"):
         subparsers.add_parser(
             command,
@@ -46,6 +50,10 @@ def main(arguments: Sequence[str] | None = None) -> int:
 
     if namespace.command == "inventory":
         output.write(format_inventory(Inventory()))
+        return 0
+
+    if namespace.command == "jobs":
+        output.write("HostGuard Jobs\n\nNo jobs running.")
         return 0
 
     if namespace.command is None:

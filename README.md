@@ -24,7 +24,7 @@ HostGuard separates platform-independent capabilities, shared core infrastructur
 
 ### Platform Layer
 
-`modules/platform/` is the boundary for future hypervisor integrations. The initial `platform/xe/` adapter is unimplemented and never executes XE or system commands. Future integrations may include Proxmox, VMware, or libvirt without requiring VMBackup to know which platform is active.
+`modules/platform/` is the boundary for hypervisor integrations. The initial `platform/xe/` adapter implements only the explicitly permitted read-only host query. Future integrations may include Proxmox, VMware, or libvirt without requiring VMBackup to know which platform is active.
 
 #### Platform Interface
 
@@ -48,7 +48,19 @@ If XE is absent, times out, returns an error, or provides no UUID, Inventory rep
 
 `modules/inventory/` is the single source of host information for every HostGuard module. Other modules must query Inventory instead of accessing the Platform Layer directly. This boundary keeps consumers platform-independent and ensures that discovery remains read-only.
 
-In Sprint 2, `InventoryCollector` returns static mock data only. It does not inspect the host or communicate with any platform integration.
+`InventoryCollector` obtains host identity through the Platform Layer. Virtual machine, storage, and network collections remain static mocks.
+
+### Job Engine
+
+`modules/jobs/` defines the in-memory execution boundary for future HostGuard operations. It contains the Job model, lifecycle status enum, manager, synchronous engine, job events, and a structural event bus. No existing module depends on the Job Engine in Sprint 5.
+
+#### Job Lifecycle
+
+A job is created with a unique identifier and moves through explicit lifecycle states. The current synchronous flow is `CREATED` → `RUNNING` → `SUCCESS` or `FAILED`; a created or running job may also become `CANCELLED`. Timestamps, duration, metadata, and lifecycle events remain in memory only, and every state change is logged.
+
+#### Event Bus
+
+The Job Engine `EventBus` defines `publish()`, `subscribe()`, and `unsubscribe()` interfaces for future event delivery. Subscriber registration and dispatch are intentionally not implemented in Sprint 5.
 
 ### Execution Context
 
@@ -101,6 +113,14 @@ hostguard/
 │   │   ├── inventory.py
 │   │   ├── models.py
 │   │   └── collector.py
+│   ├── jobs/
+│   │   ├── __init__.py
+│   │   ├── engine.py
+│   │   ├── job.py
+│   │   ├── status.py
+│   │   ├── event.py
+│   │   ├── event_bus.py
+│   │   └── manager.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
@@ -135,6 +155,7 @@ hostguard/
 - **Sprint 2:** Establish a read-only Inventory Engine with simulated data.
 - **Sprint 3:** Define virtualization platform abstractions without host communication.
 - **Sprint 4:** Add the first bounded, read-only XCP-ng host query.
+- **Sprint 5:** Establish the synchronous, in-memory Job Engine.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -154,4 +175,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 4. It can execute only the read-only `xe host-list --minimal` query to discover a host UUID. VM, storage, network, pool, backup, restore, monitoring, and doctor functionality remain unimplemented.
+HostGuard is at version `0.1.0-dev` and Sprint 5. Its Job Engine provides an isolated, synchronous in-memory lifecycle for future operations. No persistence, queue, concurrency, backup, restore, monitoring, storage, or doctor functionality is implemented.
