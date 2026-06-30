@@ -1,0 +1,12 @@
+#!/bin/sh
+
+printf '%s\n' \
+    'HostGuard' \
+    'Version 0.1.0-dev' \
+    'Modules' \
+    'VMBackup' \
+    'Backup Agent' \
+    'Doctor' \
+    'Storage' \
+    'XE' \
+    'Monitor'

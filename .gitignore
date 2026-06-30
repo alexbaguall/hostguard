@@ -1,0 +1,6 @@
+logs/
+runtime/
+tmp/
+*.log
+*.swp
+.DS_Store
