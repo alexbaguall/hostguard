@@ -34,6 +34,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Multi-target storage configuration and `storage` CLI command.
 - Declarative Backup Planner, plan validation, and typed planning results.
 - Simulated `plan` CLI command without backup execution.
+- Engineering documentation and mandatory AI knowledge base.
+- Architecture, status, roadmap, standards, operations, and decision records.
 
 ### Changed
 

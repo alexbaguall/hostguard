@@ -241,7 +241,27 @@ hostguard/
 - **Sprint 9:** Add declarative, read-only backup planning.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
-Backup, restore, monitoring, host integration, and host modification remain unimplemented.
+Backup, restore, monitoring, and host modification remain unimplemented. Host integration is limited to one read-only XE query.
+
+## Documentation
+
+Project documentation is part of the HostGuard architecture. Contributors and AI tools must begin with [AI_CONTEXT.md](AI_CONTEXT.md), then follow its required reading order.
+
+- [Project Vision](docs/PROJECT_VISION.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Current Status](docs/CURRENT_STATUS.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Project Principles](PROJECT_PRINCIPLES.md)
+- [Coding Standards](docs/engineering/CODING_STANDARDS.md)
+- [AI Guidelines](docs/engineering/AI_GUIDELINES.md)
+- [Foundation Specification](docs/specifications/FOUNDATION.md)
+- [Backup Workflow Placeholder](docs/specifications/BACKUP_WORKFLOW.md)
+- [Decision Log](docs/decisions/DECISION_LOG.md)
+- [Architecture Decision Records](docs/adr/README.md)
+- [Laboratory Operations](docs/operations/LAB.md)
+- [Production Operations](docs/operations/PRODUCTION.md)
+- [Backup Strategy](docs/operations/BACKUP_STRATEGY.md)
+- [Testing Strategy](docs/operations/TESTING.md)
 
 ## Contributing
 
@@ -258,4 +278,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 9. Its Backup Planner creates declarative plans from simulated VM data and storage metadata. Backup execution, snapshots, exports, manifests, hashing, retention, and concrete backup workflows remain unimplemented.
+HostGuard is at version `0.1.0-dev` and Sprint D1. Its architecture is documented and frozen at the foundation established through Sprint 9. Backup execution, snapshots, exports, manifests, hashing, retention, and concrete backup workflows remain unimplemented.
