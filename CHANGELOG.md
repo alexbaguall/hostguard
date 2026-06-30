@@ -26,6 +26,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Read-only XCP-ng host UUID discovery.
 - In-memory Job Engine, lifecycle manager, status enum, and job events.
 - Structural Job Engine event bus and `jobs` CLI command.
+- Abstract Workflow Engine with stage, task, registry, and exceptions.
+- Workflow execution support in the Job Engine and `workflows` CLI command.
 
 ### Changed
 

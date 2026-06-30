@@ -62,6 +62,22 @@ A job is created with a unique identifier and moves through explicit lifecycle s
 
 The Job Engine `EventBus` defines `publish()`, `subscribe()`, and `unsubscribe()` interfaces for future event delivery. Subscriber registration and dispatch are intentionally not implemented in Sprint 5.
 
+### Workflow Engine
+
+`modules/workflow/` provides the orchestration foundation for organizing future operations into workflows, stages, and tasks. A workflow is executed by the existing Job Engine so that lifecycle state and failures remain auditable. Sprint 6 defines no concrete workflows.
+
+#### Workflow
+
+`Workflow` is an abstract ordered collection of stages with identity, description, validation, and an associated Job. The Job Engine creates that Job in memory when a workflow does not already have one.
+
+#### Stage
+
+`Stage` groups tasks and executes them in insertion order. Task failures are converted into workflow-specific exceptions that identify the failing stage boundary.
+
+#### Task
+
+`Task` is the abstract unit of execution. Concrete tasks must provide `execute()`, but no task implementation is included in Sprint 6.
+
 ### Execution Context
 
 `ExecutionContext` is an immutable data structure containing the application version, hostname, environment, working directory, current user, start time, and job ID for one execution. It stores context without performing discovery or host changes.
@@ -121,6 +137,13 @@ hostguard/
 │   │   ├── event.py
 │   │   ├── event_bus.py
 │   │   └── manager.py
+│   ├── workflow/
+│   │   ├── __init__.py
+│   │   ├── workflow.py
+│   │   ├── stage.py
+│   │   ├── task.py
+│   │   ├── manager.py
+│   │   └── exceptions.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
@@ -156,6 +179,7 @@ hostguard/
 - **Sprint 3:** Define virtualization platform abstractions without host communication.
 - **Sprint 4:** Add the first bounded, read-only XCP-ng host query.
 - **Sprint 5:** Establish the synchronous, in-memory Job Engine.
+- **Sprint 6:** Establish abstract Workflow, Stage, and Task orchestration.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -175,4 +199,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 5. Its Job Engine provides an isolated, synchronous in-memory lifecycle for future operations. No persistence, queue, concurrency, backup, restore, monitoring, storage, or doctor functionality is implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 6. Its Workflow Engine organizes abstract stages and tasks within the in-memory Job lifecycle. No concrete workflow, persistence, queue, concurrency, backup, restore, monitoring, storage, or doctor functionality is implemented.
