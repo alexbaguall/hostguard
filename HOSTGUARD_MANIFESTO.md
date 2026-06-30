@@ -93,6 +93,7 @@ Before modifying code, every AI system must read:
 7. `docs/engineering/CODING_STANDARDS.md`
 8. `docs/decisions/DECISION_LOG.md`
 9. Every ADR in `docs/adr/`
+10. The corresponding RFC in `docs/rfc/`
 
 An AI system must not alter architecture without documenting and justifying the change through an ADR. It must not remove existing documentation merely because a shorter representation is possible. Repository documentation is authoritative; conversational memory is not.
 

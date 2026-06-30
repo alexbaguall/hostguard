@@ -267,6 +267,10 @@ Project documentation is part of the HostGuard architecture. Contributors and AI
 
 [HOSTGUARD_MANIFESTO.md](HOSTGUARD_MANIFESTO.md) defines the permanent identity, mission, engineering philosophy, design constraints, and production priorities of HostGuard. It is the governing reference when a technical decision is uncertain.
 
+## Engineering Process
+
+HostGuard uses a mandatory [Request for Comments process](docs/rfc/). No new functionality may be implemented before its corresponding RFC reaches `Approved`. Architectural changes also require an ADR.
+
 ## Contributing
 
 Contributions should remain small, modular, and conservative. Before submitting a change:

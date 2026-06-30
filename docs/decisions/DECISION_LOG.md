@@ -71,3 +71,9 @@ This chronological log summarizes significant project decisions. ADRs remain the
 - Established `HOSTGUARD_MANIFESTO.md` as the permanent statement of project identity and engineering philosophy.
 - Made the Manifesto mandatory reading for human and AI-assisted development.
 - Confirmed that production safety, auditability, recoverability, and predictable failure take precedence over automation and delivery speed.
+
+## RFC-000 — Engineering Process
+
+- Introduced the Draft RFC lifecycle and mandatory proposal structure.
+- Required an approved RFC before implementation of new functionality.
+- Required ADR updates for architectural changes and reproducible validation before release.

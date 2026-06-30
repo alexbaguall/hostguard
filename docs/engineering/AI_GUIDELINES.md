@@ -15,6 +15,7 @@ Before modifying any code:
 7. Read `docs/engineering/CODING_STANDARDS.md`.
 8. Read `docs/decisions/DECISION_LOG.md`.
 9. Read every ADR in `docs/adr/`.
+10. Read the corresponding RFC in `docs/rfc/` and confirm it is `Approved`.
 
 Then inspect the current Git status and the files in scope. Never assume that earlier conversation context is more current than the repository.
 
@@ -27,6 +28,7 @@ Then inspect the current Git status and the files in scope. Never assume that ea
 - Never bypass Workflow, Job, Inventory, Platform, Policy, or CommandRunner boundaries.
 - Never infer authorization for destructive behavior.
 - Never remove or contradict the Project Manifesto without an explicitly approved documentation change.
+- Never implement new functionality without an approved corresponding RFC.
 
 ## Documentation Discipline
 

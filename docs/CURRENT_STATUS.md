@@ -23,6 +23,7 @@
 - Declarative BackupPlan generation and storage-only validation.
 - Engineering documentation and required AI reading path.
 - Project Manifesto governing identity and engineering philosophy.
+- Draft RFC-000 defining the mandatory engineering process.
 
 ## Pending Components
 
@@ -37,6 +38,8 @@
 ## Architecture State
 
 The foundation architecture established through Sprint 9 is frozen. Sprints D1 and D2 change documentation only. Architectural changes require an ADR and an approved implementation specification. `HOSTGUARD_MANIFESTO.md` is the prevailing reference when a technical decision is uncertain.
+
+RFC-000 is in `Draft`. New functionality requires a corresponding RFC in `Approved` before implementation begins.
 
 The implemented system is not production-ready for backup or restore. It can inspect configured storage metadata, create simulated plans, and make one permitted read-only XE host query.
 

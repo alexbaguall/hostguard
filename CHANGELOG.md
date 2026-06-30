@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Engineering documentation and mandatory AI knowledge base.
 - Architecture, status, roadmap, standards, operations, and decision records.
 - Project Manifesto defining permanent product and engineering philosophy.
+- Draft RFC-000 establishing the official engineering process.
 
 ### Changed
 

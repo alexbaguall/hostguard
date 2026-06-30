@@ -57,6 +57,7 @@ Before changing the project, read these sources in order:
 7. `docs/engineering/CODING_STANDARDS.md`
 8. `docs/decisions/DECISION_LOG.md`
 9. Every ADR in `docs/adr/`
+10. The corresponding RFC in `docs/rfc/`
 
 # Development Rules
 
@@ -68,3 +69,4 @@ Before changing the project, read these sources in order:
 - Keep implementation inside the authorized Sprint scope.
 - Treat documentation as an architectural artifact, not optional commentary.
 - Use `HOSTGUARD_MANIFESTO.md` as the prevailing identity and engineering philosophy when technical choices are uncertain.
+- Begin every implementation by reading an approved corresponding RFC. No new functionality may be implemented without that approval.
