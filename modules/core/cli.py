@@ -3,6 +3,8 @@
 import argparse
 from collections.abc import Sequence
 
+from modules.inventory import Inventory
+
 from .output import OutputManager
 from .version import Version
 
@@ -19,6 +21,10 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command")
 
     subparsers.add_parser("version", help="Display the HostGuard version.")
+    subparsers.add_parser(
+        "inventory",
+        help="Display the read-only host inventory.",
+    )
     for command in ("doctor", "backup", "status", "verify", "restore"):
         subparsers.add_parser(
             command,
@@ -38,9 +44,29 @@ def main(arguments: Sequence[str] | None = None) -> int:
         output.write(Version().value)
         return 0
 
+    if namespace.command == "inventory":
+        output.write(format_inventory(Inventory()))
+        return 0
+
     if namespace.command is None:
         parser.print_help()
         return 0
 
     output.write(NOT_IMPLEMENTED_MESSAGE)
     return 0
+
+
+def format_inventory(inventory: Inventory) -> str:
+    """Format the current inventory for plain-text CLI output."""
+    host = inventory.get_host()
+    return "\n\n".join(
+        (
+            "HostGuard Inventory",
+            f"Host:\n{host.hostname}",
+            f"Platform:\n{host.platform}",
+            f"Version:\n{host.version}",
+            f"VMs:\n{len(inventory.get_vms())}",
+            f"Storages:\n{len(inventory.get_storage())}",
+            f"Networks:\n{len(inventory.get_networks())}",
+        )
+    )

@@ -26,6 +26,12 @@ HostGuard separates platform-independent capabilities, shared core infrastructur
 
 `modules/platform/` is the boundary for future hypervisor integrations. The initial `platform/xe/` package is structural only. Future integrations may include Proxmox, VMware, or libvirt without requiring VMBackup to know which platform is active.
 
+### Inventory Engine
+
+`modules/inventory/` is the single source of host information for every HostGuard module. Other modules must query Inventory instead of accessing the Platform Layer directly. This boundary keeps consumers platform-independent and ensures that discovery remains read-only.
+
+In Sprint 2, `InventoryCollector` returns static mock data only. It does not inspect the host or communicate with any platform integration.
+
 ### Execution Context
 
 `ExecutionContext` is an immutable data structure containing the application version, hostname, environment, working directory, current user, start time, and job ID for one execution. It stores context without performing discovery or host changes.
@@ -67,6 +73,11 @@ hostguard/
 │   │   ├── __init__.py
 │   │   └── xe/
 │   │       └── __init__.py
+│   ├── inventory/
+│   │   ├── __init__.py
+│   │   ├── inventory.py
+│   │   ├── models.py
+│   │   └── collector.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
@@ -98,6 +109,7 @@ hostguard/
 - **Milestone 0:** Establish the project structure and documentation.
 - **Sprint 1:** Provide the dependency-free core infrastructure and CLI parser.
 - **Sprint 1.1:** Consolidate platform, context, event, output, schema, and architectural decision boundaries.
+- **Sprint 2:** Establish a read-only Inventory Engine with simulated data.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -117,4 +129,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 1.1. Its architecture is consolidated for future platform and module development. No backup, restore, monitoring, storage, doctor, or platform functionality is implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 2. Its Inventory Engine exposes simulated data through a read-only boundary. No host discovery, backup, restore, monitoring, storage, doctor, or platform functionality is implemented.

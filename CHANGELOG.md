@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Schema contract documentation and Architecture Decision Records.
 - Project principles defining mandatory safety and operational behavior.
 - Execution context, event interfaces, and centralized output structure.
+- Read-only Inventory Engine with typed data models and mock collection.
+- `inventory` CLI command for displaying simulated inventory information.
 
 ### Changed
 
