@@ -16,7 +16,7 @@ HostGuard uses only tools already available on the system. It is not a backup sc
 
 ## Architecture
 
-HostGuard follows a modular architecture. The command-line entry point lives in `bin/`, while independent capabilities live in `modules/`. Mutable process state is separated into `runtime/`, operational records into `logs/`, and persistent project data into `data/`.
+HostGuard follows a modular architecture. The command-line entry point lives in `bin/`, shared infrastructure lives in `modules/core/`, and future capabilities remain isolated in their own module directories. Mutable application data is separated into `var/`, while operational records live in `logs/`.
 
 The initial module boundaries are:
 
@@ -36,22 +36,29 @@ hostguard/
 ├── bin/
 │   └── hostguard
 ├── config/
+│   └── hostguard.ini
 ├── modules/
+│   ├── core/
+│   │   ├── __init__.py
+│   │   ├── cli.py
+│   │   ├── logger.py
+│   │   ├── config.py
+│   │   ├── runtime.py
+│   │   ├── job.py
+│   │   ├── lock.py
+│   │   └── version.py
 │   ├── vmbackup/
 │   ├── backup-agent/
 │   ├── doctor/
 │   ├── storage/
 │   ├── xe/
 │   └── monitor/
-├── runtime/
+├── var/
+│   ├── cache/
 │   ├── jobs/
 │   ├── locks/
-│   └── pid/
+│   └── run/
 ├── logs/
-├── data/
-│   ├── manifests/
-│   ├── history/
-│   └── cache/
 ├── docs/
 ├── tests/
 ├── VERSION
@@ -64,9 +71,10 @@ hostguard/
 ## Roadmap
 
 - **Milestone 0:** Establish the project structure and documentation.
+- **Sprint 1:** Provide the dependency-free core infrastructure and CLI parser.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
-Backup, restore, monitoring, configuration parsing, and host modification are outside the scope of Milestone 0.
+Backup, restore, monitoring, host integration, and host modification remain unimplemented.
 
 ## Contributing
 
@@ -83,4 +91,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Milestone 0. The repository currently contains project scaffolding only. Backup, restore, monitoring, parsing, configuration, and host administration functionality have not been implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 1. The repository contains its core CLI, configuration reader, logger, runtime information collector, in-memory job manager, and lock state abstraction. No host administration module is implemented.

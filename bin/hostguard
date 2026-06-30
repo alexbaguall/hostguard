@@ -1,12 +1,15 @@
-#!/bin/sh
+#!/usr/bin/env python3
+"""HostGuard command-line entry point."""
 
-printf '%s\n' \
-    'HostGuard' \
-    'Version 0.1.0-dev' \
-    'Modules' \
-    'VMBackup' \
-    'Backup Agent' \
-    'Doctor' \
-    'Storage' \
-    'XE' \
-    'Monitor'
+from pathlib import Path
+import sys
+
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from modules.core.cli import main  # noqa: E402
+
+
+if __name__ == "__main__":
+    main()

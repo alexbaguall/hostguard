@@ -12,3 +12,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Minimal `hostguard` executable with project and module information.
 - Foundational project documentation.
 - Version identifier for the `0.1.0-dev` development release.
+- Python command-line parser and core infrastructure.
+- Configuration, logging, runtime, job, lock, and version components.

@@ -1,5 +1,5 @@
 logs/
-runtime/
+var/
 tmp/
 *.log
 *.swp
