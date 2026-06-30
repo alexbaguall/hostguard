@@ -24,7 +24,19 @@ HostGuard separates platform-independent capabilities, shared core infrastructur
 
 ### Platform Layer
 
-`modules/platform/` is the boundary for future hypervisor integrations. The initial `platform/xe/` package is structural only. Future integrations may include Proxmox, VMware, or libvirt without requiring VMBackup to know which platform is active.
+`modules/platform/` is the boundary for future hypervisor integrations. The initial `platform/xe/` adapter is unimplemented and never executes XE or system commands. Future integrations may include Proxmox, VMware, or libvirt without requiring VMBackup to know which platform is active.
+
+#### Platform Interface
+
+The abstract `Platform` interface defines host, virtual machine, storage, network, pool, and version queries. Platform adapters must implement this contract, while consumers obtain normalized information exclusively through Inventory.
+
+#### Capabilities
+
+`Capabilities` declares whether a platform supports snapshot, export, import, pool, storage, and network operations. Every capability is `False` in Sprint 3.
+
+#### Command Runner
+
+`CommandRunner` reserves a single boundary for future system command execution. Its `run()` method currently raises `NotImplementedError` and does not invoke the operating system.
 
 ### Inventory Engine
 
@@ -71,8 +83,13 @@ hostguard/
 │   │   └── version.py
 │   ├── platform/
 │   │   ├── __init__.py
+│   │   ├── platform.py
+│   │   ├── command_runner.py
+│   │   ├── capabilities.py
+│   │   ├── exceptions.py
 │   │   └── xe/
-│   │       └── __init__.py
+│   │       ├── __init__.py
+│   │       └── platform.py
 │   ├── inventory/
 │   │   ├── __init__.py
 │   │   ├── inventory.py
@@ -110,6 +127,7 @@ hostguard/
 - **Sprint 1:** Provide the dependency-free core infrastructure and CLI parser.
 - **Sprint 1.1:** Consolidate platform, context, event, output, schema, and architectural decision boundaries.
 - **Sprint 2:** Establish a read-only Inventory Engine with simulated data.
+- **Sprint 3:** Define virtualization platform abstractions without host communication.
 - **Future milestones:** Define and implement individual modules only after their safety requirements, interfaces, and validation strategies are specified.
 
 Backup, restore, monitoring, host integration, and host modification remain unimplemented.
@@ -129,4 +147,4 @@ HostGuard is available under the MIT License. See [LICENSE](LICENSE) for details
 
 ## Current Project Status
 
-HostGuard is at version `0.1.0-dev` and Sprint 2. Its Inventory Engine exposes simulated data through a read-only boundary. No host discovery, backup, restore, monitoring, storage, doctor, or platform functionality is implemented.
+HostGuard is at version `0.1.0-dev` and Sprint 3. Its Platform Layer defines interfaces only, and Inventory continues to expose simulated data. No command execution, host discovery, backup, restore, monitoring, storage, doctor, or platform functionality is implemented.

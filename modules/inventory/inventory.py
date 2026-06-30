@@ -1,5 +1,7 @@
 """Public read-only inventory service for HostGuard."""
 
+from modules.platform.xe import XEPlatform
+
 from .collector import InventoryCollector
 from .models import HostInfo, NetworkInfo, StorageRepositoryInfo, VMInfo
 
@@ -9,7 +11,7 @@ class Inventory:
 
     def __init__(self, collector: InventoryCollector | None = None) -> None:
         """Initialize the inventory with a collector."""
-        self.collector = collector or InventoryCollector()
+        self.collector = collector or InventoryCollector(XEPlatform())
 
     def get_host(self) -> HostInfo:
         """Return host information."""

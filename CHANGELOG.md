@@ -20,8 +20,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Execution context, event interfaces, and centralized output structure.
 - Read-only Inventory Engine with typed data models and mock collection.
 - `inventory` CLI command for displaying simulated inventory information.
+- Abstract Platform interface and unimplemented XE adapter.
+- Platform capabilities, command runner boundary, and exceptions.
 
 ### Changed
 
 - Routed direct CLI output through `OutputManager`.
 - Consolidated the README architecture documentation.
+- Injected a Platform into `InventoryCollector` while preserving mock data.
